@@ -11,6 +11,8 @@
 
         $seleccion = array_rand($preguntas,15);
 
+        var_dump($seleccion);
+
         return $seleccion;
 
     }
