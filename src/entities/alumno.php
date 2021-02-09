@@ -9,11 +9,11 @@
      */
 
     class Alumno {
-        /** @ORM\Id @ORM\Column(type="int") @ORM\GeneratedValue **/
+        /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
         private $id;
         /** @ORM\Column(type="string") **/
         private $nombre;
-        /** @ORM\Column(type="int") **/
+        /** @ORM\Column(type="integer") **/
         private $puntuacion;
 
         function __construct($id, $nombre, $puntuacion) {

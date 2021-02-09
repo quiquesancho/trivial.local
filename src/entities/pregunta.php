@@ -9,7 +9,7 @@
      */
 
     class Pregunta {
-        /** @ORM\Id @ORM\Column(type="int") @ORM\GeneratedValue **/
+        /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
         private $id;
         /** @ORM\Column(type="string") **/
         private $question;

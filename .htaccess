@@ -2,6 +2,3 @@
     order allow,deny  
     deny from all  
 </files> 
-RewriteEngine On 
-RewriteRule 
-RewriteRule 
