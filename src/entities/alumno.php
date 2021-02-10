@@ -16,10 +16,8 @@
         /** @ORM\Column(type="integer") **/
         private $puntuacion;
 
-        function __construct($id, $nombre, $puntuacion) {
-            $this->id = $id;
-            $this->nombre = $nombre;
-            $this->puntuacion = $puntuacion;
+        function __construct() {
+            
         }
 
         /**
