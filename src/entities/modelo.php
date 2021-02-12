@@ -11,11 +11,7 @@
 
         $preguntas = $em->getRepository('pregunta')->findBy(array('dificultad'=>$dificultad));
 
-        $preguntasRand = array_rand($preguntas,15);
-
-        $preguntasJson = json_encode($preguntasRand);
-
-        return $preguntasJson;
+        return $preguntas;
 
     }
 
