@@ -4,14 +4,37 @@
     require 'pregunta.php';
     require 'alumno.php';
 
-    function obtenerPreguntas(){
+    function obtenerPreguntas($dificultad){
 
         $em = getEntityManager();
-        $dificultad = $_SESSION['dificultad'];
+        
 
         $preguntas = $em->getRepository('pregunta')->findBy(array('dificultad'=>$dificultad));
 
-        return $preguntas;
+        $preguntasFormuladas = [];
+
+        foreach ( $preguntas as $pregunta) {
+
+            $img=$pregunta->getImagen();
+            $id= $pregunta->getId();
+            $question=$pregunta->getQuestion();
+            $answers = [$pregunta->getAnswerOk(), $pregunta->getBadAnswer1(), $pregunta->getBadAnswer2(), $pregunta->getBadAnswer3()];
+            shuffle($answers);
+            $respuestaCorrecta=$pregunta->getAnswerOk();
+
+            $preguntaMod = [
+                "imagen" => $img,
+                "id" => $id,
+                "question" => $question,
+                "answers" => $answers,
+                "respuestaCorrecta" => $respuestaCorrecta
+            ];
+
+            array_push($preguntasFormuladas, $preguntaMod);
+          
+       }
+
+        return $preguntasFormuladas;
 
     }
 

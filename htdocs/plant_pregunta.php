@@ -5,65 +5,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivial</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <script src="../functions.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <?php
+
+    require '../src/entities/modelo.php';
+
+    if (!isset($_SESSION["usuario"])) {
+        session_start();
+        $usuario = $_POST['usuario'];
+        $_SESSION["usuario"] = $usuario;
+    }
+
+    $dificultad = $_POST['dificultad'];
+
+    $preguntas = (obtenerPreguntas($dificultad));
+
+    ?>
 
 </head>
 
 <body>
-<style>
+    <style>
+        button {
+            width: 100px;
+            height: 100px;
 
-    button{
-        width: 100px;
-        height: 100px;
+        }
+    </style>
+    <br>
+    <div class="container">
+        <div class="text-center">
 
-    }
-
-</style>
-      <br>
-<div class="container">
-    <div class="text-center">
-
-   <h1>  <img src="../assets/microscopio.svg" width="40" height="40">Pregunta número <?php echo $id; ?> </h1>
-   <p>Usuario: <?php echo $_SESSION['usuario']; ?></p>
+            <h1> <img src="../assets/microscopio.svg" width="40" height="40">Pregunta número <?php echo $preguntas[0]['id']; ?> </h1>
+            <p>Usuario: <?php echo $_SESSION['usuario']; ?></p>
 
 
 
-    <h2>
-    <?php echo $question; ?>
-    </h2>
-    <hr>
+            <h2>
+                <?php echo $preguntas[0]['question']; ?>
+            </h2>
+            <hr>
 
 
-    <img src="<?php echo $img ?>"></img>
+            <img src="<?php echo $preguntas[0]['imagen'] ?>"></img>
 
-    <form action="comprobar.php" method="POST">
-    <div class="row justify-content-center">
-        <button name="opcion" value= <?php echo $answers[0]; ?> class="col-4 m-3  btn btn-primary">
-            <img class="float-left" src="../assets/diamond.svg" width="30" height="30"> <?php echo $answers[0]; ?>
-        </button>
-        <button  name="opcion" value= <?php echo $answers[1]; ?> class="col-4 m-3 btn btn-warning">
-            <img class="float-left" src="../assets/app.svg" width="30" height="30">
-            <?php echo $answers[1]; ?>
-        </button>
-    </div>
+            <form action="comprobar.php" method="POST">
+                <div class="row justify-content-center">
+                    <button name="opcion" value="<?php echo $preguntas[0]['answers'][0]; ?>" class="col-4 m-3  btn btn-primary">
+                        <img class="float-left" src="../assets/diamond.svg" width="30" height="30"> <?php echo $preguntas[0]['answers'][0]; ?>
+                    </button>
+                    
+                    <button name="opcion" value="<?php echo $preguntas[0]['answers'][1]; ?>" class="col-4 m-3 btn btn-warning">
+                        <img class="float-left" src="../assets/app.svg" width="30" height="30">
+                        <?php echo $preguntas[0]['answers'][1]; ?>
+                    </button>
+                    
+                </div>
 
-      
-          <div class="row justify-content-center">
-    <button  name="opcion" value= <?php echo $answers[2]; ?> class="col-4 m-3 btn  btn-success">
-        <img class="float-left" src="../assets/heptagon.svg" width="30" height="30">
-        <?php echo $answers[2]; ?>
-    </button>
-    <button name="opcion" value= <?php echo $answers[3]; ?> class="col-4 m-3 btn btn-dark">
-        <img class="float-left" src="../assets/019triangle_99969.svg" width="30" height="30" >
-        <?php echo $answers[3]; ?>
-    </button>
+
+                <div class="row justify-content-center">
+                    <button name="opcion" value="<?php echo $preguntas[0]['answers'][2]; ?>" class="col-4 m-3 btn  btn-success">
+                        <img class="float-left" src="../assets/heptagon.svg" width="30" height="30">
+                        <?php echo $preguntas[0]['answers'][2]; ?>
+                    </button>
+                    
+                    <button name="opcion" value="<?php echo $preguntas[0]['answers'][3]; ?>" class="col-4 m-3 btn btn-dark">
+                        <img class="float-left" src="../assets/019triangle_99969.svg" width="30" height="30">
+                        <?php echo $preguntas[0]['answers'][3]; ?>
+                    </button>
+                    
+                </div>
         </div>
-      </div>
-      </form>
-</div>
-</div>
+        </form>
+    </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-
 DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

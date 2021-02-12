@@ -9,7 +9,6 @@ require 'plant_index.html';
    
     require 'plant_pregunta.html';
    
-    
 } else if ($uri == "puntuacion") { 
     
     require 'plant_puntuacion.html';
