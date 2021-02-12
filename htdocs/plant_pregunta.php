@@ -10,8 +10,8 @@
 
     require '../src/entities/modelo.php';
 
+    session_start();
     if (!isset($_SESSION["usuario"])) {
-        session_start();
         $usuario = $_POST['usuario'];
         $_SESSION["usuario"] = $usuario;
     }
@@ -19,6 +19,8 @@
     $dificultad = $_POST['dificultad'];
 
     $preguntas = (obtenerPreguntas($dificultad));
+    
+    $_SESSION["respuestaOK"] = $preguntas[0]['respuestaCorrecta'];
 
     ?>
 
