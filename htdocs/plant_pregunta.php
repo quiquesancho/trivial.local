@@ -11,16 +11,37 @@
     require '../src/entities/modelo.php';
 
     session_start();
+    if(isset($_SESSION["indice"])){
+        $_SESSION["indice"] =  $_SESSION["indice"] + 1;
+
+        if($_SESSION["indice"] === count($_SESSION['preguntas'])){
+            header('Location: plant_fin.php');
+        }
+    }
+
+    if(isset($_POST['opcion'])){
+        $opcion = $_POST['opcion'];
+        if(comrpobarRespuesta($opcion, $_SESSION["respuestaOK"])){
+            $_SESSION["marcador"] = $_SESSION["marcador"] + 1;
+        }
+
+    }
+
+    if(isset($_POST['dificultad'])){
+        $dificultad = $_POST['dificultad'];
+    }
+
     if (!isset($_SESSION["usuario"])) {
         $usuario = $_POST['usuario'];
         $_SESSION["usuario"] = $usuario;
+        $_SESSION["indice"] = 0;
+        $_SESSION["marcador"] = 0;
+        $_SESSION["preguntas"] = obtenerPreguntas($dificultad);
     }
 
-    $dificultad = $_POST['dificultad'];
+    $preguntas = $_SESSION['preguntas'];
 
-    $preguntas = (obtenerPreguntas($dificultad));
-    
-    $_SESSION["respuestaOK"] = $preguntas[0]['respuestaCorrecta'];
+    $_SESSION["respuestaOK"] = $preguntas[$_SESSION["indice"]]['respuestaCorrecta'];
 
     ?>
 
@@ -38,42 +59,42 @@
     <div class="container">
         <div class="text-center">
 
-            <h1> <img src="../assets/microscopio.svg" width="40" height="40">Pregunta número <?php echo $preguntas[0]['id']; ?> </h1>
+            <h1> <img src="../assets/microscopio.svg" width="40" height="40">Pregunta número <?php echo $preguntas[$_SESSION["indice"]]['id']; ?> </h1>
             <p>Usuario: <?php echo $_SESSION['usuario']; ?></p>
 
 
 
             <h2>
-                <?php echo $preguntas[0]['question']; ?>
+                <?php echo $preguntas[$_SESSION["indice"]]['question']; ?>
             </h2>
             <hr>
 
 
-            <img src="<?php echo $preguntas[0]['imagen'] ?>"></img>
+            <img src="<?php echo $preguntas[$_SESSION["indice"]]['imagen'] ?>"></img>
 
-            <form action="comprobar.php" method="POST">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                 <div class="row justify-content-center">
-                    <button name="opcion" value="<?php echo $preguntas[0]['answers'][0]; ?>" class="col-4 m-3  btn btn-primary">
-                        <img class="float-left" src="../assets/diamond.svg" width="30" height="30"> <?php echo $preguntas[0]['answers'][0]; ?>
+                    <button name="opcion" value="<?php echo $preguntas[$_SESSION["indice"]]['answers'][0]; ?>" class="col-4 m-3  btn btn-primary">
+                        <img class="float-left" src="../assets/diamond.svg" width="30" height="30"> <?php echo $preguntas[$_SESSION["indice"]]['answers'][0]; ?>
                     </button>
                     
-                    <button name="opcion" value="<?php echo $preguntas[0]['answers'][1]; ?>" class="col-4 m-3 btn btn-warning">
+                    <button name="opcion" value="<?php echo $preguntas[$_SESSION["indice"]]['answers'][1]; ?>" class="col-4 m-3 btn btn-warning">
                         <img class="float-left" src="../assets/app.svg" width="30" height="30">
-                        <?php echo $preguntas[0]['answers'][1]; ?>
+                        <?php echo $preguntas[$_SESSION["indice"]]['answers'][1]; ?>
                     </button>
                     
                 </div>
 
 
                 <div class="row justify-content-center">
-                    <button name="opcion" value="<?php echo $preguntas[0]['answers'][2]; ?>" class="col-4 m-3 btn  btn-success">
+                    <button name="opcion" value="<?php echo $preguntas[$_SESSION["indice"]]['answers'][2]; ?>" class="col-4 m-3 btn  btn-success">
                         <img class="float-left" src="../assets/heptagon.svg" width="30" height="30">
-                        <?php echo $preguntas[0]['answers'][2]; ?>
+                        <?php echo $preguntas[$_SESSION["indice"]]['answers'][2]; ?>
                     </button>
                     
-                    <button name="opcion" value="<?php echo $preguntas[0]['answers'][3]; ?>" class="col-4 m-3 btn btn-dark">
+                    <button name="opcion" value="<?php echo $preguntas[$_SESSION["indice"]]['answers'][3]; ?>" class="col-4 m-3 btn btn-dark">
                         <img class="float-left" src="../assets/019triangle_99969.svg" width="30" height="30">
-                        <?php echo $preguntas[0]['answers'][3]; ?>
+                        <?php echo $preguntas[$_SESSION["indice"]]['answers'][3]; ?>
                     </button>
                     
                 </div>
